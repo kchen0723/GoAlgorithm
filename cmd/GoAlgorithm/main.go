@@ -18,8 +18,8 @@ func main() {
 	// treeString := sealize(tree)
 	// fmt.Println(treeString)
 
-	input := "(-5.3+7/9-6)*(7+3)"
-	re := regexp.MustCompile(`([0-9]+[\.0-9]*|[\(\)\+\*-/])`)
+	input := "(-5.3+72/9-6)*(7+3)"
+	re := regexp.MustCompile(`[0-9]+[\.0-9]*|[\(\)\+\*-/]`)
 	splitor := re.FindAllStringSubmatch(input, -1)
 	for _, item := range splitor {
 		fmt.Println(item[0])
