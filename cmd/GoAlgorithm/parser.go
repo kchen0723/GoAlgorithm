@@ -41,7 +41,7 @@ func ParseExpression(tokens []string) []string {
 	for _, token := range tokens {
 		if IsNumber(token) {
 			data = append(data, token)
-		} else if token == "(" {
+		} else if token == "(" || len(operators) == 0 {
 			operators = append(operators, token)
 		} else if token == ")" {
 			for i := len(operators) - 1; i >= 0; i-- {
@@ -54,24 +54,16 @@ func ParseExpression(tokens []string) []string {
 				}
 			}
 		} else {
-			if len(operators) > 0 {
-				for i := len(operators) - 1; i >= 0; i-- {
-					lastOperator := operators[len(operators)-1]
-					if lastOperator == "(" {
-						break
-					} else {
-						if IsOperatorNotLow(token, lastOperator) {
-							data = append(data, lastOperator)
-							operators = operators[:len(operators)-1]
-						} else {
-							break
-						}
-					}
+			for i := len(operators) - 1; i >= 0; i-- {
+				lastOperator := operators[i]
+				if lastOperator == "(" ||
+					((token == "*" || token == "/") && (lastOperator == "+" || lastOperator == "-")) {
+					break
 				}
-				operators = append(operators, token)
-			} else {
-				operators = append(operators, token)
+				data = append(data, lastOperator)
+				operators = operators[:len(operators)-1]
 			}
+			operators = append(operators, token)
 		}
 	}
 	for i := len(operators) - 1; i >= 0; i-- {
@@ -84,24 +76,6 @@ func IsNumber(source string) bool {
 	result := true
 	if source == ")" || source == "(" || source == "+" || source == "-" || source == "*" || source == "/" {
 		result = false
-	}
-	return result
-}
-
-func IsOperator(source string) bool {
-	result := false
-	if source == "+" || source == "-" || source == "*" || source == "/" {
-		result = true
-	}
-	return result
-}
-
-func IsOperatorNotLow(token string, lastOperator string) bool {
-	result := true
-	if lastOperator == "+" || lastOperator == "-" {
-		if token == "*" || token == "/" {
-			result = false
-		}
 	}
 	return result
 }
