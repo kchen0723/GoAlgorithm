@@ -41,38 +41,36 @@ func ParseExpression(tokens []string) []string {
 	for _, token := range tokens {
 		if IsNumber(token) {
 			data = append(data, token)
+		} else if token == "(" {
+			operators = append(operators, token)
+		} else if token == ")" {
+			for i := len(operators) - 1; i >= 0; i-- {
+				if operators[i] == "(" {
+					operators = operators[:len(operators)-1]
+					break
+				} else {
+					data = append(data, operators[i])
+					operators = operators[:len(operators)-1]
+				}
+			}
 		} else {
-			if IsOperator(token) {
-				if len(operators) > 0 {
-					for i := len(operators) - 1; i >= 0; i-- {
-						lastOperator := operators[len(operators)-1]
-						if lastOperator == "(" {
-							break
+			if len(operators) > 0 {
+				for i := len(operators) - 1; i >= 0; i-- {
+					lastOperator := operators[len(operators)-1]
+					if lastOperator == "(" {
+						break
+					} else {
+						if IsOperatorNotLow(token, lastOperator) {
+							data = append(data, lastOperator)
+							operators = operators[:len(operators)-1]
 						} else {
-							if IsOperatorNotLow(token, lastOperator) {
-								data = append(data, lastOperator)
-								operators = operators[:len(operators)-1]
-							} else {
-								break
-							}
+							break
 						}
 					}
-					operators = append(operators, token)
-				} else {
-					operators = append(operators, token)
 				}
-			} else if token == "(" {
 				operators = append(operators, token)
-			} else if token == ")" {
-				for i := len(operators) - 1; i >= 0; i-- {
-					if operators[i] != "(" {
-						data = append(data, operators[i])
-						operators = operators[:len(operators)-1]
-					} else {
-						break
-					}
-				}
-				operators = operators[:len(operators)-1]
+			} else {
+				operators = append(operators, token)
 			}
 		}
 	}
