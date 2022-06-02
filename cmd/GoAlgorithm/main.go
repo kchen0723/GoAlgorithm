@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"math/rand"
-	"regexp"
 
 	// "os"
 	// "os/signal"
@@ -19,10 +18,9 @@ func main() {
 	// fmt.Println(treeString)
 
 	input := "(-5.3+72/9-6)*(7+3)"
-	re := regexp.MustCompile(`[0-9]+[\.0-9]*|[\(\)\+\*-/]`)
-	splitor := re.FindAllStringSubmatch(input, -1)
-	for _, item := range splitor {
-		fmt.Println(item[0])
+	tokens := GetTokens(input)
+	if len(tokens) > 0 {
+
 	}
 }
 
