@@ -17,10 +17,17 @@ func main() {
 	// treeString := sealize(tree)
 	// fmt.Println(treeString)
 
-	input := "(-5.3+72/9-6)*(7+3)"
+	input := "(1+7)/4"
 	tokens := GetTokens(input)
 	if len(tokens) > 0 {
-
+		// postfixTokens := ParseExpression(tokens)
+		// if len(postfixTokens) > 0 {
+		postfix := []string{"1", "7", "+", "4", "/"}
+		result := calculate(postfix)
+		if result == 2 {
+			fmt.Println("bingo")
+		}
+		// }
 	}
 }
 
