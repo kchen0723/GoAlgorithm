@@ -13,22 +13,26 @@ import (
 var firstchan chan int
 
 func main() {
-	// tree := createCalculateTree()
-	// treeString := sealize(tree)
-	// fmt.Println(treeString)
+	tree := createCalculateTree()
+	treeString := sealize(tree)
+	fmt.Println(treeString)
 
-	input := "1+5-2*(4+3)"
-	tokens := GetTokens(input)
-	if len(tokens) > 0 {
-		postfixTokens := ParseExpression(tokens)
-		if len(postfixTokens) > 0 {
-			// postfix := []string{"1", "7", "+", "4", "/"}
-			result := calculate(postfixTokens)
-			if result == 2 {
-				fmt.Println("bingo")
-			}
-		}
+	rebuildTree := desealize(treeString)
+	if rebuildTree != nil {
+
 	}
+
+	// input := "1+5-2*(4+3)"
+	// tokens := GetTokens(input)
+	// if len(tokens) > 0 {
+	// 	postfixTokens := ParseExpression(tokens)
+	// 	if len(postfixTokens) > 0 {
+	// 		result := calculate(postfixTokens)
+	// 		if result == 2 {
+	// 			fmt.Println("bingo")
+	// 		}
+	// 	}
+	// }
 }
 
 // func main() {
