@@ -44,33 +44,40 @@ func ParseExpression(tokens []string) []string {
 		} else {
 			if IsOperator(token) {
 				if len(operators) > 0 {
-					lastOperator := operators[len(operators)-1]
-					if isOperatorHigher(token, lastOperator) {
-						operators = append(operators, token)
-					} else {
-						for _, operator := range operators {
-							if !isOperatorHigher(operator, token) || operator == "(" {
-								data = append(data, operator)
-								operators = operators[:len(operators)-2]
+					for i := len(operators) - 1; i >= 0; i-- {
+						lastOperator := operators[len(operators)-1]
+						if lastOperator == "(" {
+							break
+						} else {
+							if IsOperatorNotLow(token, lastOperator) {
+								data = append(data, lastOperator)
+								operators = operators[:len(operators)-1]
+							} else {
+								break
 							}
 						}
-						data = append(data, token)
 					}
+					operators = append(operators, token)
 				} else {
 					operators = append(operators, token)
 				}
 			} else if token == "(" {
 				operators = append(operators, token)
 			} else if token == ")" {
-				for _, operator := range operators {
-					if operator != "(" {
-						data = append(data, operator)
-						operators = operators[:len(operators)-2]
+				for i := len(operators) - 1; i >= 0; i-- {
+					if operators[i] != "(" {
+						data = append(data, operators[i])
+						operators = operators[:len(operators)-1]
+					} else {
+						break
 					}
 				}
-				operators = operators[:len(operators)-2]
+				operators = operators[:len(operators)-1]
 			}
 		}
+	}
+	for i := len(operators) - 1; i >= 0; i-- {
+		data = append(data, operators[i])
 	}
 	return data
 }
@@ -91,11 +98,11 @@ func IsOperator(source string) bool {
 	return result
 }
 
-func IsOperatorHigh(left string, right string) bool {
-	result := false
-	if left == "*" || left == "/" {
-		if right == "+" || right == "-" {
-			result = true
+func IsOperatorNotLow(token string, lastOperator string) bool {
+	result := true
+	if lastOperator == "+" || lastOperator == "-" {
+		if token == "*" || token == "/" {
+			result = false
 		}
 	}
 	return result
