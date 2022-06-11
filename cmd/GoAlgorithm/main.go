@@ -13,14 +13,18 @@ import (
 var firstchan chan int
 
 func main() {
-	tree := createCalculateTree()
-	treeString := sealize(tree)
-	fmt.Println(treeString)
-
-	rebuildTree := desealize(treeString)
-	if rebuildTree != nil {
+	numbers := []int{1, 2, 3, 4, 5}
+	permutations := GetPermutation(numbers, 3)
+	if len(permutations) > 0 {
 
 	}
+
+	// tree := createCalculateTree()
+	// treeString := sealize(tree)
+	// fmt.Println(treeString)
+	// rebuildTree := desealize(treeString)
+	// if rebuildTree != nil {
+	// }
 
 	// input := "1+5-2*(4+3)"
 	// tokens := GetTokens(input)
