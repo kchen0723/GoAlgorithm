@@ -1,25 +1,24 @@
 package main
 
-var result [][]int
-
 func GetPermutation(numbers []int, length int) [][]int {
-	result = [][]int{}
+	result := [][]int{}
 	permutation := []int{}
-	GetPermutationHelper(numbers, length, permutation)
+	result = GetPermutationHelper(numbers, length, permutation, result)
 	return result
 }
 
-func GetPermutationHelper(numbers []int, length int, permutation []int) {
+func GetPermutationHelper(numbers []int, length int, permutation []int, result [][]int) [][]int {
 	if len(permutation) == length {
 		copyPermu := make([]int, len(permutation))
 		copy(copyPermu, permutation)
 		result = append(result, copyPermu)
-		return
+		return result
 	}
 
 	for _, item := range numbers {
 		permutation = append(permutation, item)
-		GetPermutationHelper(numbers, length, permutation)
+		result = GetPermutationHelper(numbers, length, permutation, result)
 		permutation = permutation[:len(permutation)-1]
 	}
+	return result
 }
