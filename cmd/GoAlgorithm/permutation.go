@@ -1,13 +1,13 @@
 package main
 
-func GetPermutation(numbers []int, length int) [][]int {
+func GetAllPermutation(numbers []int, length int) [][]int {
 	result := [][]int{}
 	permutation := []int{}
-	result = GetPermutationHelper(numbers, length, permutation, result)
+	result = GetAllPermutationHelper(numbers, length, permutation, result)
 	return result
 }
 
-func GetPermutationHelper(numbers []int, length int, permutation []int, result [][]int) [][]int {
+func GetAllPermutationHelper(numbers []int, length int, permutation []int, result [][]int) [][]int {
 	if len(permutation) == length {
 		copyPermu := make([]int, len(permutation))
 		copy(copyPermu, permutation)
@@ -17,8 +17,37 @@ func GetPermutationHelper(numbers []int, length int, permutation []int, result [
 
 	for _, item := range numbers {
 		permutation = append(permutation, item)
-		result = GetPermutationHelper(numbers, length, permutation, result)
+		result = GetAllPermutationHelper(numbers, length, permutation, result)
 		permutation = permutation[:len(permutation)-1]
+	}
+	return result
+}
+
+func GetPermutation(numbers []int, length int) [][]int {
+	result := [][]int{}
+	permutation := []int{}
+	used := make([]bool, len(numbers))
+	result = GetPermutationHelper(numbers, length, used, permutation, result)
+	return result
+}
+
+func GetPermutationHelper(numbers []int, length int, used []bool, permutation []int, result [][]int) [][]int {
+	if len(permutation) == length {
+		copyPermu := make([]int, len(permutation))
+		copy(copyPermu, permutation)
+		result = append(result, copyPermu)
+		return result
+	}
+
+	for i := 0; i < len(numbers); i++ {
+		if used[i] {
+			continue
+		}
+		used[i] = true
+		permutation = append(permutation, numbers[i])
+		result = GetPermutationHelper(numbers, length, used, permutation, result)
+		permutation = permutation[:len(permutation)-1]
+		used[i] = false
 	}
 	return result
 }
