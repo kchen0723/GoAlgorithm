@@ -14,7 +14,7 @@ var firstchan chan int
 
 func main() {
 	numbers := []int{1, 2, 3}
-	permutations := GetSubsets(numbers, 3)
+	permutations := GetLengthSubset(numbers, 2)
 	if len(permutations) > 0 {
 
 	}
