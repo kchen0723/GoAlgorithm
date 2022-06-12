@@ -22,3 +22,26 @@ func GetPermutationHelper(numbers []int, length int, permutation []int, result [
 	}
 	return result
 }
+
+func GetSubsets(numbers []int, length int) [][]int {
+	result := [][]int{}
+	permutation := []int{}
+	result = GetSubsetsHelper(numbers, 0, permutation, result)
+	return result
+}
+
+func GetSubsetsHelper(numbers []int, start int, permutation []int, result [][]int) [][]int {
+	// if len(permutation) == length {
+	copyPermu := make([]int, len(permutation))
+	copy(copyPermu, permutation)
+	result = append(result, copyPermu)
+	// return result
+	// }
+
+	for i := start; i < len(numbers); i++ {
+		permutation = append(permutation, numbers[i])
+		result = GetSubsetsHelper(numbers, i+1, permutation, result)
+		permutation = permutation[:len(permutation)-1]
+	}
+	return result
+}

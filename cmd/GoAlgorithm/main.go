@@ -13,8 +13,8 @@ import (
 var firstchan chan int
 
 func main() {
-	numbers := []int{1, 2, 3, 4, 5}
-	permutations := GetPermutation(numbers, 3)
+	numbers := []int{1, 2, 3}
+	permutations := GetSubsets(numbers, 3)
 	if len(permutations) > 0 {
 
 	}
