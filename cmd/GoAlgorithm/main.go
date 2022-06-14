@@ -14,8 +14,13 @@ var firstchan chan int
 
 func main() {
 	numbers := []int{1, 2, 3}
-	permutations := GetAllPermutation(numbers, 2)
-	permutations = GetPermutation(numbers, 2)
+	permutations := GetPermutationUnique(numbers, 3)
+	permutations = GetPermutationMultipleTimes(numbers, 3)
+	permutations = GetCombinationUnique(numbers, 2)
+	permutations = GetCombinationMultipleTimes(numbers, 2)
+	numbers = []int{2, 1, 2}
+	permutations = GetPermutationDuplicate(numbers, 3)
+	permutations = GetCombinationDuplicate(numbers, 2)
 	if len(permutations) > 0 {
 
 	}
