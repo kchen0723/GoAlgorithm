@@ -13,18 +13,28 @@ import (
 var firstchan chan int
 
 func main() {
-	numbers := []int{1, 2, 3}
+	numbers := []int{1, 2, 3, 4}
 	permutations := GetPermutationUnique(numbers, 3)
 	permutations = GetPermutationMultipleTimes(numbers, 3)
-	permutations = GetCombinationUnique(numbers, 2)
-	permutations = GetCombinationMultipleTimes(numbers, 2)
+	permutations = GetCombinationUnique(numbers, 3)
+	permutations = GetCombinationMultipleTimes(numbers, 3)
 	numbers = []int{2, 1, 2}
 	permutations = GetPermutationDuplicate(numbers, 3)
 	permutations = GetCombinationDuplicate(numbers, 2)
 	if len(permutations) > 0 {
-
 	}
 
+	numbers = []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13}
+	Combinations := GetCombinationMultipleTimes(numbers, 4)
+	var result [][]int
+	for _, item := range Combinations {
+		if get4NumberResultHelper(item) {
+			result = append(result, item)
+		}
+	}
+	if len(result) > 0 {
+
+	}
 	// tree := createCalculateTree()
 	// treeString := sealize(tree)
 	// fmt.Println(treeString)

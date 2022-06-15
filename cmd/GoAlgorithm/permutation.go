@@ -70,12 +70,11 @@ func GetPermutationDuplicateHelper(numbers []int, length int, used []bool, permu
 func GetPermutationMultipleTimes(numbers []int, length int) [][]int {
 	result := [][]int{}
 	permutation := []int{}
-	used := make([]bool, len(numbers))
-	result = GetPermutationMultipleTimesHelper(numbers, length, used, permutation, result)
+	result = GetPermutationMultipleTimesHelper(numbers, length, permutation, result)
 	return result
 }
 
-func GetPermutationMultipleTimesHelper(numbers []int, length int, used []bool, permutation []int, result [][]int) [][]int {
+func GetPermutationMultipleTimesHelper(numbers []int, length int, permutation []int, result [][]int) [][]int {
 	if len(permutation) == length {
 		copyPermu := make([]int, len(permutation))
 		copy(copyPermu, permutation)
@@ -84,11 +83,9 @@ func GetPermutationMultipleTimesHelper(numbers []int, length int, used []bool, p
 	}
 
 	for i := 0; i < len(numbers); i++ {
-		used[i] = true
 		permutation = append(permutation, numbers[i])
-		result = GetPermutationMultipleTimesHelper(numbers, length, used, permutation, result)
+		result = GetPermutationMultipleTimesHelper(numbers, length, permutation, result)
 		permutation = permutation[:len(permutation)-1]
-		used[i] = false
 	}
 	return result
 }
