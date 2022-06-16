@@ -28,13 +28,16 @@ func main() {
 	Combinations := GetCombinationMultipleTimes(numbers, 4)
 	var result [][]int
 	for _, item := range Combinations {
-		if get4NumberResultHelper(item) {
+		if Is4NumberCombationValid(item) {
 			result = append(result, item)
 		}
 	}
 	if len(result) > 0 {
 
 	}
+	// numbers = []int{8, 3, 8, 3}
+	// Is4NumberPermutationValid(numbers)
+
 	// tree := createCalculateTree()
 	// treeString := sealize(tree)
 	// fmt.Println(treeString)
