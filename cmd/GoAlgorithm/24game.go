@@ -35,20 +35,25 @@ func Is4NumberCombationValid(numbers []int) bool {
 }
 
 func Is4NumberPermutationValid(numbers []int) bool {
-	if isCaseAValid(numbers) { //（（0， 1）2，）3
+	if isCaseAValid(numbers) { //（（0， 1）2，）3  ab*c*d*
 		return true
 	}
-	if isCaseBvalid(numbers) { //（0， 1）（2，3）
+	if isCaseBvalid(numbers) { //（0， 1）（2，3）ab*cd**
 		return true
 	}
-	if isCaseCValid(numbers) { // 0（1（2，3））
+	if isCaseCValid(numbers) { // 0（1（2，3））abcd***
 		return true
 	}
-	if isCaseDValid(numbers) { //（0， (1, 2）)3
+	if isCaseDValid(numbers) { //（0， (1, 2）)3  abc**d*
 		return true
 	}
-	if isCaseEValid(numbers) { //0， ((1 2)，3)
+	if isCaseEValid(numbers) { //0， ((1 2)，3) abc*d**
 		return true
+		//ab*                                        ab*
+		//ab*c* abc**                                ab*c**
+		//ab*c*d* ab*cd** abc*d** abcd*** abc**d*    ab*c**d***
+		//ab*c*d*e* abc**d*e* abcde**** abc*d**e*    ab*c**d***e****
+		//                                           ab*c**d***e****f*****
 	}
 	return false
 }
