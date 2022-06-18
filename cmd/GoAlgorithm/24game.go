@@ -1,6 +1,8 @@
 package main
 
-import "math"
+import (
+	"math"
+)
 
 //https://blog.csdn.net/problc/article/details/7287138, total 1362 answers
 var target24 = 24
@@ -31,6 +33,36 @@ func Is4NumberCombationValid(numbers []int) bool {
 			break
 		}
 	}
+	return result
+}
+
+func getOperatorPermutations(length int) [][]string {
+	operators := []string{"+", "-", "*", "/"}
+	operatorsPermutation := GetPermutationMultipleTimesSubset(operators, length)
+	return operatorsPermutation
+}
+
+func get4NumberPostfix(numbers []int) [][]interface{} {
+	var result [][]interface{}
+	if len(numbers) != 4 {
+		return result
+	}
+
+	var permuation []interface{}
+	permuation = append(permuation, numbers[0])
+	permuation = append(permuation, numbers[1])
+	// oneOperatorPermutation := getOperatorPermutations(1)
+	// twoeOperatorPermutation := getOperatorPermutations(2)
+	// threeOperatorPermutation := getOperatorPermutations(3)
+	// for _, one := range oneOperatorPermutation {
+
+	// 	for _, two := range twoeOperatorPermutation {
+	// 		for _, tree := range threeOperatorPermutation {
+
+	// 		}
+	// 	}
+	// }
+
 	return result
 }
 

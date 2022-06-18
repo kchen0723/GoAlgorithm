@@ -89,3 +89,26 @@ func GetPermutationMultipleTimesHelper(numbers []int, length int, permutation []
 	}
 	return result
 }
+
+func GetPermutationMultipleTimesSubset(numbers []string, length int) [][]string {
+	var result [][]string
+	var permutation []string
+	result = GetPermutationMultipleTimesSubsetHelper(numbers, length, permutation, result)
+	return result
+}
+
+func GetPermutationMultipleTimesSubsetHelper(numbers []string, length int, permutation []string, result [][]string) [][]string {
+	copyPermu := make([]string, len(permutation))
+	copy(copyPermu, permutation)
+	result = append(result, copyPermu)
+	if len(permutation) >= length {
+		return result
+	}
+
+	for i := 0; i < len(numbers); i++ {
+		permutation = append(permutation, numbers[i])
+		result = GetPermutationMultipleTimesSubsetHelper(numbers, length, permutation, result)
+		permutation = permutation[:len(permutation)-1]
+	}
+	return result
+}

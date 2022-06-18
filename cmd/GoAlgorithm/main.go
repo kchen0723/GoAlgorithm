@@ -35,8 +35,10 @@ func main() {
 	if len(result) > 0 {
 
 	}
-	// numbers = []int{8, 3, 8, 3}
-	// Is4NumberPermutationValid(numbers)
+	operatorsPermutation := getOperatorPermutations(1)
+	if len(operatorsPermutation) > 0 {
+
+	}
 
 	// tree := createCalculateTree()
 	// treeString := sealize(tree)
