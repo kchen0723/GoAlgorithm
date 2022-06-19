@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"math"
 )
 
@@ -28,12 +29,47 @@ func Is4NumberCombationValid(numbers []int) bool {
 	// permutations := GetPermutationUnique(testNumbers, len(testNumbers))
 	permutations := GetPermutationUnique(numbers, len(numbers))
 	for _, permutation := range permutations {
-		if Is4NumberPermutationValid(permutation) {
-			result = true
-			break
+		// if Is4NumberPermutationValid(permutation) {
+		// 	result = true
+		// 	break
+		// }
+		postfixes := get4NumberPostfix(permutation)
+		for _, item := range postfixes {
+			calculatePostfix(item)
 		}
 	}
 	return result
+}
+
+func calculatePostfix(postfixExpress []interface{}) (bool, float64) {
+	var stack []float64
+	for _, token := range postfixExpress {
+		switch v := token.(type) {
+		case float32:
+			fmt.Println(v)
+			break
+		case float64:
+			fmt.Println(v)
+			break
+		case int:
+			fmt.Println(v)
+			break
+		case int64:
+			fmt.Println(v)
+			break
+		case int32:
+			fmt.Println(v)
+			break
+		case string:
+			fmt.Println(v)
+			break
+		}
+		if token != nil {
+
+		}
+		stack = append(stack, float64(0))
+	}
+	return false, 0
 }
 
 func getOperatorPermutations(length int) [][]string {
@@ -48,20 +84,41 @@ func get4NumberPostfix(numbers []int) [][]interface{} {
 		return result
 	}
 
-	var permuation []interface{}
-	permuation = append(permuation, numbers[0])
-	permuation = append(permuation, numbers[1])
-	// oneOperatorPermutation := getOperatorPermutations(1)
-	// twoeOperatorPermutation := getOperatorPermutations(2)
-	// threeOperatorPermutation := getOperatorPermutations(3)
-	// for _, one := range oneOperatorPermutation {
-
-	// 	for _, two := range twoeOperatorPermutation {
-	// 		for _, tree := range threeOperatorPermutation {
-
-	// 		}
-	// 	}
-	// }
+	var permutation []interface{}
+	permutation = append(permutation, numbers[0])
+	permutation = append(permutation, numbers[1])
+	oneOperatorPermutation := getOperatorPermutations(1)
+	twoeOperatorPermutation := getOperatorPermutations(2)
+	threeOperatorPermutation := getOperatorPermutations(3)
+	for _, one := range oneOperatorPermutation {
+		if len(one) > 0 {
+			permutation = append(permutation, one[0])
+		}
+		permutation = append(permutation, numbers[2])
+		for _, two := range twoeOperatorPermutation {
+			if len(two) <= 2-len(one) {
+				if len(two) > 0 {
+					for _, twoItem := range two {
+						permutation = append(permutation, twoItem)
+					}
+				}
+				permutation = append(permutation, numbers[3])
+				for _, three := range threeOperatorPermutation {
+					if len(three) == 3-len(two)-len(one) {
+						for _, threeItem := range three {
+							permutation = append(permutation, threeItem)
+						}
+						copyPerum := make([]interface{}, len(permutation))
+						copy(copyPerum, permutation)
+						result = append(result, copyPerum)
+						permutation = permutation[:len(permutation)-len(three)]
+					}
+				}
+				permutation = permutation[:len(permutation)-len(two)-1]
+			}
+		}
+		permutation = permutation[:len(permutation)-len(one)-1]
+	}
 
 	return result
 }

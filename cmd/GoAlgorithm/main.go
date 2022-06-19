@@ -35,10 +35,10 @@ func main() {
 	if len(result) > 0 {
 
 	}
-	operatorsPermutation := getOperatorPermutations(1)
-	if len(operatorsPermutation) > 0 {
+	// operatorsPermutation := get4NumberPostfix([]int{8, 3, 8, 3})
+	// if len(operatorsPermutation) > 0 {
 
-	}
+	// }
 
 	// tree := createCalculateTree()
 	// treeString := sealize(tree)
