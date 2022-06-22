@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math"
+	"strconv"
 )
 
 //https://blog.csdn.net/problc/article/details/7287138, total 1362 answers
@@ -121,6 +122,49 @@ func get4NumberPostfix(numbers []int) [][]interface{} {
 	}
 
 	return result
+}
+
+func get4NumberPostfixBackTrack(numbers []int) [][]string {
+	var result [][]string
+	if len(numbers) < 2 {
+		return result
+	}
+
+	var permutation []string
+	permutation = append(permutation, strconv.Itoa(numbers[0]))
+	var operatorPermutations [][][]string
+	for i := 0; i < len(numbers)-1; i++ {
+		operatorPermutations = append(operatorPermutations, getOperatorPermutations(i))
+	}
+	result = get4NumberPostfixBackTrackHelper(numbers, operatorPermutations, 0, 0, permutation, result)
+	return result
+}
+
+func get4NumberPostfixBackTrackHelper(numbers []int, operatorPermutations [][][]string, positionIndex int, operatorSum int, permutations []string, postfixPermutations [][]string) [][]string {
+	if positionIndex > len(numbers)-2 {
+		copyPerum := make([]string, len(permutations))
+		copy(copyPerum, permutations)
+		postfixPermutations = append(postfixPermutations, copyPerum)
+		return postfixPermutations
+	}
+
+	permutations = append(permutations, strconv.Itoa(numbers[positionIndex+1]))
+	positionoperatorPermutations := operatorPermutations[positionIndex]
+	for _, operators := range positionoperatorPermutations {
+		if positionIndex < len(numbers)-2 {
+			if len(operators) > positionIndex-operatorSum+1 {
+				continue
+			}
+		} else if positionIndex == len(numbers)-2 {
+			if len(operators) != len(numbers)-operatorSum-1 {
+				continue
+			}
+		}
+		permutations = append(permutations, operators...)
+		postfixPermutations = get4NumberPostfixBackTrackHelper(numbers, operatorPermutations, positionIndex+1, operatorSum+len(operators), permutations, postfixPermutations)
+		permutations = permutations[:len(permutations)-1]
+	}
+	return postfixPermutations
 }
 
 func Is4NumberPermutationValid(numbers []int) bool {
