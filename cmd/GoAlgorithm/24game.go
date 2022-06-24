@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"math"
 	"strconv"
 )
@@ -34,43 +33,17 @@ func Is4NumberCombationValid(numbers []int) bool {
 		// 	result = true
 		// 	break
 		// }
-		postfixes := get4NumberPostfix(permutation)
+		postfixes := get4NumberPostfixBackTrack(permutation)
 		for _, item := range postfixes {
-			calculatePostfix(item)
+			postfixResult, isSuccessful := calculate(item)
+			if isSuccessful {
+				if math.Abs(postfixResult-float64(target24)) < 0.0001 {
+					return true
+				}
+			}
 		}
 	}
 	return result
-}
-
-func calculatePostfix(postfixExpress []interface{}) (bool, float64) {
-	var stack []float64
-	for _, token := range postfixExpress {
-		switch v := token.(type) {
-		case float32:
-			fmt.Println(v)
-			break
-		case float64:
-			fmt.Println(v)
-			break
-		case int:
-			fmt.Println(v)
-			break
-		case int64:
-			fmt.Println(v)
-			break
-		case int32:
-			fmt.Println(v)
-			break
-		case string:
-			fmt.Println(v)
-			break
-		}
-		if token != nil {
-
-		}
-		stack = append(stack, float64(0))
-	}
-	return false, 0
 }
 
 func getOperatorPermutations(length int) [][]string {
@@ -133,7 +106,7 @@ func get4NumberPostfixBackTrack(numbers []int) [][]string {
 	var permutation []string
 	permutation = append(permutation, strconv.Itoa(numbers[0]))
 	var operatorPermutations [][][]string
-	for i := 0; i < len(numbers)-1; i++ {
+	for i := 1; i < len(numbers); i++ {
 		operatorPermutations = append(operatorPermutations, getOperatorPermutations(i))
 	}
 	result = get4NumberPostfixBackTrackHelper(numbers, operatorPermutations, 0, 0, permutation, result)
@@ -162,7 +135,7 @@ func get4NumberPostfixBackTrackHelper(numbers []int, operatorPermutations [][][]
 		}
 		permutations = append(permutations, operators...)
 		postfixPermutations = get4NumberPostfixBackTrackHelper(numbers, operatorPermutations, positionIndex+1, operatorSum+len(operators), permutations, postfixPermutations)
-		permutations = permutations[:len(permutations)-1]
+		permutations = permutations[:len(permutations)-len(operators)]
 	}
 	return postfixPermutations
 }

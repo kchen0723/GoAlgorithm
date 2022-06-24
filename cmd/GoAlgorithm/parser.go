@@ -1,11 +1,13 @@
 package main
 
-import "strconv"
+import (
+	"strconv"
+)
 
-func calculate(tokens []string) int {
-	result := 0
+func calculate(tokens []string) (float64, bool) {
+	result := float64(0)
 	if len(tokens) == 0 {
-		return result
+		return result, false
 	}
 
 	var stack []string
@@ -15,24 +17,27 @@ func calculate(tokens []string) int {
 		} else {
 			last := stack[len(stack)-1]
 			secondLast := stack[len(stack)-2]
-			lastInt, _ := strconv.Atoi(last)
-			secondLastInt, _ := strconv.Atoi(secondLast)
-			midResult := 0
+			lastFloat64, _ := strconv.ParseFloat(last, 64)
+			secondLastFloat64, _ := strconv.ParseFloat(secondLast, 64)
+			midResult := float64(0)
 			if token == "+" {
-				midResult = secondLastInt + lastInt
+				midResult = secondLastFloat64 + lastFloat64
 			} else if token == "-" {
-				midResult = secondLastInt - lastInt
+				midResult = secondLastFloat64 - lastFloat64
 			} else if token == "*" {
-				midResult = secondLastInt * lastInt
+				midResult = secondLastFloat64 * lastFloat64
 			} else if token == "/" {
-				midResult = secondLastInt / lastInt
+				if lastFloat64 == 0 {
+					return float64(0), false
+				}
+				midResult = secondLastFloat64 / lastFloat64
 			}
 			stack = stack[:len(stack)-2]
-			stack = append(stack, strconv.Itoa(midResult))
+			stack = append(stack, strconv.FormatFloat(midResult, 'f', -1, 64))
 		}
 	}
-	result, _ = strconv.Atoi(stack[0])
-	return result
+	result, _ = strconv.ParseFloat(stack[0], 64)
+	return result, true
 }
 
 func ParseExpression(tokens []string) []string {

@@ -35,7 +35,7 @@ func main() {
 	if len(result) > 0 {
 
 	}
-	// operatorsPermutation := get4NumberPostfix([]int{8, 3, 8, 3})
+	// operatorsPermutation := get4NumberPostfixBackTrack([]int{8, 3, 8, 3})
 	// if len(operatorsPermutation) > 0 {
 
 	// }
