@@ -10,34 +10,32 @@ func calculate(tokens []string) (float64, bool) {
 		return result, false
 	}
 
-	var stack []string
+	var stack []float64
 	for _, token := range tokens {
 		if IsNumber(token) {
-			stack = append(stack, token)
+			tokenFloat, _ := strconv.ParseFloat(token, 64)
+			stack = append(stack, tokenFloat)
 		} else {
 			last := stack[len(stack)-1]
 			secondLast := stack[len(stack)-2]
-			lastFloat64, _ := strconv.ParseFloat(last, 64)
-			secondLastFloat64, _ := strconv.ParseFloat(secondLast, 64)
 			midResult := float64(0)
 			if token == "+" {
-				midResult = secondLastFloat64 + lastFloat64
+				midResult = secondLast + last
 			} else if token == "-" {
-				midResult = secondLastFloat64 - lastFloat64
+				midResult = secondLast - last
 			} else if token == "*" {
-				midResult = secondLastFloat64 * lastFloat64
+				midResult = secondLast * last
 			} else if token == "/" {
-				if lastFloat64 == 0 {
+				if last == 0 {
 					return float64(0), false
 				}
-				midResult = secondLastFloat64 / lastFloat64
+				midResult = secondLast / last
 			}
 			stack = stack[:len(stack)-2]
-			stack = append(stack, strconv.FormatFloat(midResult, 'f', -1, 64))
+			stack = append(stack, midResult)
 		}
 	}
-	result, _ = strconv.ParseFloat(stack[0], 64)
-	return result, true
+	return stack[0], true
 }
 
 func ParseExpression(tokens []string) []string {
