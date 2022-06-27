@@ -24,17 +24,18 @@ func main() {
 	if len(permutations) > 0 {
 	}
 
-	numbers = []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13}
-	Combinations := GetCombinationMultipleTimes(numbers, 4)
-	var result [][]int
-	for _, item := range Combinations {
-		if Is4NumberCombationValid(item) {
-			result = append(result, item)
-		}
-	}
-	if len(result) > 0 {
+	// numbers = []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13}
+	// Combinations := GetCombinationMultipleTimes(numbers, 4)
+	// var result [][]int
+	// for _, item := range Combinations {
+	// 	if Is4NumberCombationValid(item) {
+	// 		result = append(result, item)
+	// 	}
+	// }
+	// if len(result) > 0 {
 
-	}
+	// }
+	solveHanoiTower()
 	// operatorsPermutation := get4NumberPostfixBackTrack([]int{8, 3, 8, 3})
 	// if len(operatorsPermutation) > 0 {
 
