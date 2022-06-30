@@ -19,16 +19,53 @@ func solveHanoiTower() {
 
 func solveHanoiTowerHelp(source *Hanoi, help *Hanoi, target *Hanoi, sourceDataLength int) {
 	if sourceDataLength == 1 {
-		fmt.Println("moving " + strconv.Itoa(source.data[0]) + " from: " + source.name + " to: " + target.name)
+		fmt.Print("moving " + strconv.Itoa(source.data[0]) + " from " + source.name + " to " + target.name)
 		target.data = append([]int{source.data[0]}, target.data...)
 		source.data = source.data[1:]
+		printAllStack(source, help, target)
 		return
 	}
 
 	solveHanoiTowerHelp(source, target, help, sourceDataLength-1)
 	lastdata := source.data[0]
-	fmt.Println("moving " + strconv.Itoa(lastdata) + " from: " + source.name + " to: " + target.name)
+	fmt.Print("moving " + strconv.Itoa(lastdata) + " from " + source.name + " to " + target.name)
 	target.data = append([]int{lastdata}, target.data...)
 	source.data = source.data[1:]
+	printAllStack(source, help, target)
 	solveHanoiTowerHelp(help, source, target, sourceDataLength-1)
+}
+
+func printAllStack(source *Hanoi, help *Hanoi, target *Hanoi) {
+	fmt.Print(", Now the Stacks are:")
+	var hanois = []*Hanoi{source, help, target}
+
+	sourceHanoi := findByName(hanois, "source")
+	printAllStackHelp(sourceHanoi)
+	helpHanoi := findByName(hanois, "help")
+	printAllStackHelp(helpHanoi)
+	targetHanoi := findByName(hanois, "target")
+	printAllStackHelp(targetHanoi)
+
+	fmt.Println("")
+}
+
+func findByName(hanois []*Hanoi, targetName string) *Hanoi {
+	for _, item := range hanois {
+		if item.name == targetName {
+			return item
+		}
+	}
+	return nil
+}
+
+func printAllStackHelp(hanoi *Hanoi) {
+	fmt.Print(" ")
+	fmt.Print(hanoi.name)
+	fmt.Print(":")
+	for i, item := range hanoi.data {
+		fmt.Print(item)
+		if i < len(hanoi.data)-1 {
+			fmt.Print(",")
+		}
+	}
 }
