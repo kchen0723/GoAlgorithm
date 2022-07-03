@@ -35,7 +35,7 @@ func main() {
 	// if len(result) > 0 {
 
 	// }
-	solveHanoiTower()
+	solveHanoiTower2()
 	// operatorsPermutation := get4NumberPostfixBackTrack([]int{8, 3, 8, 3})
 	// if len(operatorsPermutation) > 0 {
 
