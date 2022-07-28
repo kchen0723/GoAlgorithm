@@ -24,6 +24,11 @@ func main() {
 	if len(permutations) > 0 {
 	}
 
+	input := "2*3-5+8/3+10"
+	result := diffWaysToComputer(input)
+	if len(result) > 0 {
+
+	}
 	// numbers = []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13}
 	// Combinations := GetCombinationMultipleTimes(numbers, 4)
 	// var result [][]int
