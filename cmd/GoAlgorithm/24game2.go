@@ -2,33 +2,44 @@ package main
 
 // use divide and conquer to calculate 24 game.
 
+type game struct {
+	permutations []int
+	operators    []int
+	brackets     []int
+}
+
 func calculate24() {
 	numbers := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13}
 	maxCards := 4
 	Combinations := GetCombinationMultipleTimes(numbers, maxCards)
 	operators := []int{0, 1, 2, 3}
 	operatorPermutations := GetPermutationMultipleTimes(operators, maxCards-1)
-	result := 0
+	var games []game
 	for _, item := range Combinations {
-		result += calculateCombination(item, operatorPermutations)
+		ok, game := calculateCombination(item, operatorPermutations)
+		if ok {
+			games = append(games, game)
+		}
 	}
-	if result > 0 {
+	if len(games) > 0 {
 
 	}
 }
 
-func calculateCombination(numbers []int, operators [][]int) int {
-	result := 0
+func calculateCombination(numbers []int, operators [][]int) (bool, game) {
+	var result game
 	permutations := GetPermutationUnique(numbers, len(numbers))
 	for _, permutationNumbers := range permutations {
 		for _, operators := range operators {
 			candidates := tackleBrackets(permutationNumbers, operators)
 			if hasTarget24(candidates) {
-				return 1
+				result.permutations = permutationNumbers
+				result.operators = operators
+				return true, result
 			}
 		}
 	}
-	return result
+	return false, result
 }
 
 func tackleBrackets(numbers []int, operators []int) []float64 {
