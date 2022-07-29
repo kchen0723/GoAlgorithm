@@ -29,6 +29,7 @@ func main() {
 	if len(result) > 0 {
 
 	}
+	calculate24()
 	// numbers = []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13}
 	// Combinations := GetCombinationMultipleTimes(numbers, 4)
 	// var result [][]int
