@@ -1,11 +1,16 @@
 package main
 
+import (
+	"math"
+	"strconv"
+)
+
 // use divide and conquer to calculate 24 game.
 
 type game struct {
 	permutations []int
 	operators    []int
-	brackets     []int
+	express      string
 }
 
 func calculate24() {
@@ -31,10 +36,12 @@ func calculateCombination(numbers []int, operators [][]int) (bool, game) {
 	permutations := GetPermutationUnique(numbers, len(numbers))
 	for _, permutationNumbers := range permutations {
 		for _, operators := range operators {
-			candidates := tackleBrackets(permutationNumbers, operators)
-			if hasTarget24(candidates) {
+			candidates, candidateExpresses := tackleBrackets(permutationNumbers, operators)
+			has, index := getTarget24Index(candidates)
+			if has {
 				result.permutations = permutationNumbers
 				result.operators = operators
+				result.express = candidateExpresses[index]
 				return true, result
 			}
 		}
@@ -42,28 +49,45 @@ func calculateCombination(numbers []int, operators [][]int) (bool, game) {
 	return false, result
 }
 
-func tackleBrackets(numbers []int, operators []int) []float64 {
+func getTarget24Index(numbers []float64) (bool, int) {
+	for i, item := range numbers {
+		// if item == float64(target24) {
+		// 	return true
+		// }
+		if math.Abs(item-float64(target24)) < 0.001 {
+			return true, i
+		}
+	}
+	return false, 0
+}
+
+func tackleBrackets(numbers []int, operators []int) ([]float64, []string) {
 	var result []float64
+	var expressResult []string
 	for i := 0; i < len(operators); i++ {
 		leftNumbers := numbers[:i+1]
 		rightNumbers := numbers[i+1:]
 		leftOperators := operators[:i]
 		rightOperators := operators[i+1:]
 
-		leftResult := tackleBrackets(leftNumbers, leftOperators)
-		rightResult := tackleBrackets(rightNumbers, rightOperators)
-		for _, left := range leftResult {
-			for _, right := range rightResult {
+		leftResult, leftExpress := tackleBrackets(leftNumbers, leftOperators)
+		rightResult, rightExpress := tackleBrackets(rightNumbers, rightOperators)
+		for j, left := range leftResult {
+			for k, right := range rightResult {
 				switch operators[i] {
 				case 0:
 					result = append(result, left+right)
+					expressResult = append(expressResult, "("+leftExpress[j]+" + "+rightExpress[k]+")")
 				case 1:
 					result = append(result, left-right)
+					expressResult = append(expressResult, "("+leftExpress[j]+" - "+rightExpress[k]+")")
 				case 2:
 					result = append(result, left*right)
+					expressResult = append(expressResult, "("+leftExpress[j]+" * "+rightExpress[k]+")")
 				case 3:
 					if right != 0 {
 						result = append(result, left/right)
+						expressResult = append(expressResult, "("+leftExpress[j]+" / "+rightExpress[k]+")")
 					}
 				}
 			}
@@ -72,6 +96,7 @@ func tackleBrackets(numbers []int, operators []int) []float64 {
 
 	if len(result) == 0 {
 		result = append(result, float64(numbers[0]))
+		expressResult = append(expressResult, strconv.Itoa(numbers[0]))
 	}
-	return result
+	return result, expressResult
 }
