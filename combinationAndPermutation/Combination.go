@@ -54,3 +54,54 @@ func getCombationFromDuplicateArrayHelp(nums []int, length int, index int, candi
 		candidate = candidate[:len(candidate)-1]
 	}
 }
+
+func GetCombationMultipleTime(nums []int, length int) [][]int {
+	if len(nums) == 0 || length == 0 {
+		return [][]int{}
+	}
+	var result [][]int
+	getCombationMultipleTimeHelp(nums, length, 0, []int{}, &result)
+	return result
+}
+
+func getCombationMultipleTimeHelp(nums []int, length int, index int, candidate []int, result *[][]int) {
+	if len(candidate) == length {
+		item := append([]int(nil), candidate...)
+		*result = append(*result, item)
+		return
+	}
+
+	for i := index; i < len(nums); i++ {
+		candidate = append(candidate, nums[i])
+
+		getCombationMultipleTimeHelp(nums, length, i, candidate, result)
+
+		candidate = candidate[:len(candidate)-1]
+	}
+}
+
+func GetCombationMultimeTimeSubset(nums []int, length int) [][]int {
+	if len(nums) == 0 || length == 0 {
+		return [][]int{}
+	}
+	var result [][]int
+	getCombationMultimeTimeSubsetHelp(nums, length, 0, []int{}, &result)
+	return result
+}
+
+func getCombationMultimeTimeSubsetHelp(nums []int, length int, index int, candidate []int, result *[][]int) {
+	item := append([]int(nil), candidate...)
+	*result = append(*result, item)
+
+	if len(candidate) >= length {
+		return
+	}
+
+	for i := index; i < len(nums); i++ {
+		candidate = append(candidate, nums[i])
+
+		getCombationMultimeTimeSubsetHelp(nums, length, i, candidate, result)
+
+		candidate = candidate[:len(candidate)-1]
+	}
+}

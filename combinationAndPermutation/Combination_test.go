@@ -69,3 +69,15 @@ func TestGetCombationFromDuplicateArray(t *testing.T) {
 	result := GetCombationFromDuplicateArray(nums, 2)
 	fmt.Println(result)
 }
+
+func TestGetCombationMultipleTime(t *testing.T) {
+	nums := []int{1, 2}
+	result := GetCombationMultipleTime(nums, 3)
+	fmt.Println(result)
+}
+
+func TestGetCombationMultimeTimeSubset(t *testing.T) {
+	nums := []int{1, 2, 3}
+	result := GetCombationMultimeTimeSubset(nums, 2)
+	fmt.Println(result)
+}
