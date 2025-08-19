@@ -1,6 +1,7 @@
 package combinationandpermation
 
 import (
+	"fmt"
 	"reflect"
 	"sort"
 	"testing"
@@ -61,4 +62,10 @@ func TestGetCombationFromUniqueArray(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestGetCombationFromDuplicateArray(t *testing.T) {
+	nums := []int{1, 2, 3, 2}
+	result := GetCombationFromDuplicateArray(nums, 2)
+	fmt.Println(result)
 }
