@@ -6,12 +6,17 @@ import (
 )
 
 func TestMin(t *testing.T) {
-	tree := createTestingBinarTree()
+	tree := createTestingBinaryTree()
 	min, _ := tree.Min()
 	fmt.Println(min)
 }
 
-func createTestingBinarTree() *BinaryTree {
+func TestLevelOrder(t *testing.T) {
+	tree := createTestingBinaryTree()
+	tree.LevelOrder()
+}
+
+func createTestingBinaryTree() *BinaryTree {
 	result := NewBinaryTree()
 	result.Root = &BinaryTreeNode{
 		Value: 8,
