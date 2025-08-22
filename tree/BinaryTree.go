@@ -75,3 +75,26 @@ func FindMaxSpanHelp(node *BinaryTreeNode) (float64, float64) {
 	result := math.Max(crossNodeSpan, math.Max(leftResult, rightResult))
 	return result, height
 }
+
+func (bt *BinaryTree) IsSymmetric() bool {
+	if bt.Root == nil {
+		return true
+	}
+	return IsSymmetricHelp(bt.Root.Left, bt.Root.Right)
+}
+
+func IsSymmetricHelp(left *BinaryTreeNode, right *BinaryTreeNode) bool {
+	if left == nil && right == nil {
+		return true
+	}
+	if left == nil || right == nil {
+		return false
+	}
+	if left.Value != right.Value {
+		return false
+	}
+
+	leftResult := IsSymmetricHelp(left.Left, right.Right)
+	rightResult := IsSymmetricHelp(left.Right, right.Left)
+	return leftResult && rightResult
+}
