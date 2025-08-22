@@ -16,6 +16,12 @@ func TestLevelOrder(t *testing.T) {
 	tree.LevelOrder()
 }
 
+func TestFindMaxSpan(t *testing.T) {
+	tree := createTestingBinaryTree()
+	maxSpan := tree.FindMaxSpan()
+	fmt.Println(maxSpan)
+}
+
 func createTestingBinaryTree() *BinaryTree {
 	result := NewBinaryTree()
 	result.Root = &BinaryTreeNode{

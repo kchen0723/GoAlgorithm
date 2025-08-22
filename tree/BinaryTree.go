@@ -52,3 +52,26 @@ func (bt *BinaryTree) LevelOrder() {
 		}
 	}
 }
+
+func (bt *BinaryTree) FindMaxSpan() int {
+	if bt.Root == nil {
+		return 0
+	}
+
+	result, _ := FindMaxSpanHelp(bt.Root)
+	return int(result)
+}
+
+func FindMaxSpanHelp(node *BinaryTreeNode) (float64, float64) {
+	if node == nil {
+		return 0, 0
+	}
+
+	leftResult, leftHeight := FindMaxSpanHelp(node.Left)
+	rightResult, rightHeight := FindMaxSpanHelp(node.Right)
+	height := math.Max(leftHeight, rightHeight) + 1
+
+	crossNodeSpan := leftHeight + rightHeight + 1
+	result := math.Max(crossNodeSpan, math.Max(leftResult, rightResult))
+	return result, height
+}
