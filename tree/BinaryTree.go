@@ -16,17 +16,17 @@ func (bt *BinaryTree) Min() (float64, bool) {
 	if bt.Root == nil {
 		return math.NaN(), false
 	}
-	return MinHelp(bt.Root), true
+	return minHelp(bt.Root), true
 }
 
-func MinHelp(node *BinaryTreeNode) float64 {
+func minHelp(node *BinaryTreeNode) float64 {
 	result := node.Value
 	if node.Left != nil {
-		leftMin := MinHelp(node.Left)
+		leftMin := minHelp(node.Left)
 		result = math.Min(result, leftMin)
 	}
 	if node.Right != nil {
-		rightMin := MinHelp(node.Right)
+		rightMin := minHelp(node.Right)
 		result = math.Min(result, rightMin)
 	}
 	return result
@@ -58,17 +58,17 @@ func (bt *BinaryTree) FindMaxSpan() int {
 		return 0
 	}
 
-	result, _ := FindMaxSpanHelp(bt.Root)
+	result, _ := findMaxSpanHelp(bt.Root)
 	return int(result)
 }
 
-func FindMaxSpanHelp(node *BinaryTreeNode) (float64, float64) {
+func findMaxSpanHelp(node *BinaryTreeNode) (float64, float64) {
 	if node == nil {
 		return 0, 0
 	}
 
-	leftResult, leftHeight := FindMaxSpanHelp(node.Left)
-	rightResult, rightHeight := FindMaxSpanHelp(node.Right)
+	leftResult, leftHeight := findMaxSpanHelp(node.Left)
+	rightResult, rightHeight := findMaxSpanHelp(node.Right)
 	height := math.Max(leftHeight, rightHeight) + 1
 
 	crossNodeSpan := leftHeight + rightHeight + 1
@@ -80,10 +80,10 @@ func (bt *BinaryTree) IsSymmetric() bool {
 	if bt.Root == nil {
 		return true
 	}
-	return IsSymmetricHelp(bt.Root.Left, bt.Root.Right)
+	return isSymmetricHelp(bt.Root.Left, bt.Root.Right)
 }
 
-func IsSymmetricHelp(left *BinaryTreeNode, right *BinaryTreeNode) bool {
+func isSymmetricHelp(left *BinaryTreeNode, right *BinaryTreeNode) bool {
 	if left == nil && right == nil {
 		return true
 	}
@@ -94,7 +94,87 @@ func IsSymmetricHelp(left *BinaryTreeNode, right *BinaryTreeNode) bool {
 		return false
 	}
 
-	leftResult := IsSymmetricHelp(left.Left, right.Right)
-	rightResult := IsSymmetricHelp(left.Right, right.Left)
+	leftResult := isSymmetricHelp(left.Left, right.Right)
+	rightResult := isSymmetricHelp(left.Right, right.Left)
 	return leftResult && rightResult
+}
+
+func (bt *BinaryTree) IsBalanced() bool {
+	if bt.Root == nil {
+		return true
+	}
+	result, _ := isBalancedHelp(bt.Root)
+	return result
+}
+
+func isBalancedHelp(node *BinaryTreeNode) (bool, float64) {
+	if node == nil {
+		return true, 0
+	}
+	leftResult, leftHeight := isBalancedHelp(node.Left)
+	if !leftResult {
+		return false, -1
+	}
+	rightResult, rightHeight := isBalancedHelp(node.Right)
+	if !rightResult {
+		return false, -1
+	}
+
+	height := math.Max(leftHeight, rightHeight) + 1
+	if math.Abs(leftHeight-rightHeight) <= 1 {
+		return true, height
+	}
+	return false, -1
+}
+
+func (bt *BinaryTree) IsBst() bool {
+	if bt.Root == nil {
+		return true
+	}
+	return isBstHelp(bt.Root, nil, nil)
+}
+
+func isBstHelp(current *BinaryTreeNode, min *BinaryTreeNode, max *BinaryTreeNode) bool {
+	if current == nil {
+		return true
+	}
+	if min != nil && current.Value <= min.Value {
+		return false
+	}
+	if max != nil && current.Value >= max.Value {
+		return false
+	}
+
+	leftResult := isBstHelp(current.Left, min, current)
+	rightResult := isBstHelp(current.Right, current, max)
+	return leftResult && rightResult
+}
+
+func (bt *BinaryTree) GetLowestCommonAncestor(p *BinaryTreeNode, q *BinaryTreeNode) *BinaryTreeNode {
+	if bt.Root == nil {
+		return nil
+	}
+	return getLowestCommonAncestorHelp(bt.Root, p, q)
+}
+
+func getLowestCommonAncestorHelp(current *BinaryTreeNode, p *BinaryTreeNode, q *BinaryTreeNode) *BinaryTreeNode {
+	if current == nil {
+		return nil
+	}
+	if current.Value == p.Value || current.Value == q.Value {
+		return current
+	}
+
+	left := getLowestCommonAncestorHelp(current.Left, p, q)
+	right := getLowestCommonAncestorHelp(current.Right, p, q)
+	if left != nil && right != nil {
+		return current
+	}
+	if left != nil {
+		return left
+	}
+	if right != nil {
+		return right
+	}
+	return nil
 }
