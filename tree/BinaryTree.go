@@ -179,6 +179,27 @@ func getLowestCommonAncestorHelp(current *BinaryTreeNode, p *BinaryTreeNode, q *
 	return nil
 }
 
+func (bt *BinaryTree) PreOrderIteration() {
+	if bt == nil || bt.Root == nil {
+		return
+	}
+
+	var stack []*BinaryTreeNode
+	stack = append(stack, bt.Root)
+	for len(stack) > 0 {
+		current := stack[len(stack)-1]
+		stack = stack[:len(stack)-1]
+		println(current.Value)
+
+		if current.Right != nil {
+			stack = append(stack, current.Right)
+		}
+		if current.Left != nil {
+			stack = append(stack, current.Left)
+		}
+	}
+}
+
 func (bt *BinaryTree) InOrderIteration() {
 	if bt == nil || bt.Root == nil {
 		return
@@ -199,11 +220,46 @@ func (bt *BinaryTree) InOrderIteration() {
 				break
 			}
 		}
-		println(current.Value)
-		dic[current] = true
 
 		if current.Right != nil {
 			stack = append(stack, current.Right)
 		}
+
+		println(current.Value)
+		dic[current] = true
+	}
+}
+
+func (bt *BinaryTree) PostOrderIteration() {
+	if bt == nil || bt.Root == nil {
+		return
+	}
+
+	var stack []*BinaryTreeNode
+	dic := make(map[*BinaryTreeNode]bool)
+	stack = append(stack, bt.Root)
+	for len(stack) > 0 {
+		current := stack[len(stack)-1]
+		stack = stack[:len(stack)-1]
+
+		for current.Left != nil {
+			if _, isExist := dic[current.Left]; !isExist {
+				stack = append(stack, current)
+				current = current.Left
+			} else {
+				break
+			}
+		}
+
+		if current.Right != nil {
+			if _, isExist := dic[current.Right]; !isExist {
+				stack = append(stack, current)
+				stack = append(stack, current.Right)
+				continue
+			}
+		}
+
+		println(current.Value)
+		dic[current] = true
 	}
 }

@@ -22,9 +22,19 @@ func TestFindMaxSpan(t *testing.T) {
 	fmt.Println(maxSpan)
 }
 
+func TestPreOrderIteration(t *testing.T) {
+	tree := createTestingBinaryTree()
+	tree.PreOrderIteration()
+}
+
 func TestInOrderIteration(t *testing.T) {
 	tree := createTestingBinaryTree()
 	tree.InOrderIteration()
+}
+
+func TestPostOrderIteration(t *testing.T) {
+	tree := createTestingBinaryTree()
+	tree.PostOrderIteration()
 }
 
 func createTestingBinaryTree() *BinaryTree {
