@@ -10,4 +10,9 @@ func TestGetMaxProfitForWeightByBackTracking(t *testing.T) {
 	if result != 15 {
 		t.Errorf("GetMaxProfitForWeightByBackTracking() = %f, want %d", result, 15)
 	}
+
+	result = GetMaxProfitForWeightByDP(bags, 10)
+	if result != 15 {
+		t.Errorf("GetMaxProfitForWeightByBackTracking() = %f, want %d", result, 15)
+	}
 }
